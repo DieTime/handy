@@ -12,20 +12,21 @@ them either.
 Build dir is always `.build`.
 
 ```sh
-meson setup .build                                          # first-time configure (nothing builds by default)
-meson setup .build -Dbuild_examples=true -Dbuild_tests=true # configure with examples and tests enabled
-meson compile -C .build                                     # build
-meson test -C .build                                        # run full test suite (only if configured with build_tests)
-meson test -C .build log_format                             # run a single test by name
+meson setup .build                    # first-time configure (examples build by default, tests don't)
+meson setup .build -Dbuild_tests=true # also configure with tests enabled
+meson compile -C .build               # build
+meson test -C .build                  # run full test suite (only if configured with build_tests)
+meson test -C .build log_format       # run a single test by name
 ```
 
-Both examples and tests are opt-in (`-Dbuild_examples=true`, `-Dbuild_tests=true`)
-- a bare `meson setup .build` builds nothing but the header-only `include/`
-subdir. Tests additionally require `gtest`/`gtest_main` to be found on the
-system via pkg-config - there's no bundled/wrap fallback, so configuring with
-`build_tests=true` fails hard if GoogleTest isn't installed (e.g.
-`apt install libgtest-dev`). Test binaries are named `<module>_<case>`,
-matching the `.cpp` file. Example binaries build to `.build/examples/...`.
+Examples build by default (`build_examples`, default `true` - no extra
+dependency beyond the C compiler consumers already need). Tests are opt-in
+(`build_tests`, default `false`) since they additionally require
+`gtest`/`gtest_main` to be found on the system via pkg-config - there's no
+bundled/wrap fallback, so configuring with `build_tests=true` fails hard if
+GoogleTest isn't installed (e.g. `apt install libgtest-dev`). Test binaries
+are named `<module>_<case>`, matching the `.cpp` file. Example binaries build
+to `.build/examples/...`.
 
 ## Architecture
 
