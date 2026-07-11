@@ -6,10 +6,6 @@
 #ifndef HANDY_COMMON_H
 #define HANDY_COMMON_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define HANDY_CONCAT_IMPL(a, b) a ## b
 #define HANDY_CONCAT(a, b) HANDY_CONCAT_IMPL(a, b)
 
@@ -21,9 +17,5 @@ extern "C" {
 #define HANDY_PREFIX_STRIP 1
 
 #define HANDY_PREFIX_VALUE HANDY_CONCAT(HANDY_PREFIX_, HANDY_PREFIX)
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* HANDY_COMMON_H */

@@ -62,10 +62,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef HANDY_LOG_STDIO
 #define HANDY_LOG_STDIO STDERR
 #endif
@@ -168,10 +164,6 @@ extern "C" {
     #define log_i handy_log_i
     #define log_w handy_log_w
     #define log_e handy_log_e
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif /* HANDY_LOG_H */
