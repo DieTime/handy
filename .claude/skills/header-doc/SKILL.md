@@ -11,7 +11,7 @@ Plain-text (non-Doxygen) top-of-file doc comment for `handy` headers, per `inclu
 
 - New module header under `include/handy/`.
 - Header has public macros/functions, a usage example, or `#define` config options.
-- No config/usage (e.g. `colors.h`, `common.h`) → minimal variant only, don't force the full template.
+- No config/usage (e.g. `internal/colors.h`, `internal/common.h`) → minimal variant only, don't force the full template.
 
 ## Full template
 
@@ -61,8 +61,8 @@ after `#endif`, repeat a license-only block:
 
 ## Minimal variant
 
-No usage/config to show (`colors.h`, `common.h`) → only this at the top,
-no trailing duplicate:
+No usage/config to show (`internal/colors.h`, `internal/common.h`) → only
+this at the top, no trailing duplicate:
 
 ```c
 /**
@@ -91,5 +91,5 @@ no trailing duplicate:
 
 ## Worked example
 
-`include/handy/log.h` lines 1-53 (full); `include/handy/colors.h` /
-`include/handy/common.h` lines 1-4 (minimal).
+`include/handy/log.h` lines 1-53 (full); `include/handy/internal/colors.h` /
+`include/handy/internal/common.h` lines 1-4 (minimal).

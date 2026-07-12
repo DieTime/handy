@@ -30,15 +30,20 @@ to `.build/examples/...`.
 
 ## Architecture
 
-**Config mechanism (`common.h`):** each option is `#define HANDY_<MODULE>_<OPTION> <WORD>`
+**Config mechanism:** each option is `#define HANDY_<MODULE>_<OPTION> <WORD>`
 before including the header (`#ifndef` supplies a default). `HANDY_CONCAT(a, b)`
 (indirection macro so args expand before pasting) turns the word into an
 internal define: `HANDY_<MODULE>_<OPTION> <WORD>` → `HANDY_<MODULE>_<OPTION>_VALUE
 == HANDY_<MODULE>_<OPTION>_<WORD>`.
 
-**`HANDY_PREFIX` (`common.h`):** library-wide switch. `KEEP` (default) keeps
+**`HANDY_PREFIX` (`internal/common.h`):** library-wide switch. `KEEP` (default) keeps
 public macros under `handy_`; `STRIP` also exposes a short alias for each.
 Every module's public macros must respect it.
+
+**`include/handy/internal/`:** shared support headers used by multiple
+modules but not meant to be included directly by consumers (`common.h`,
+`colors.h`). Module headers reference them with a relative
+`#include "internal/<name>.h"`.
 
 **Tests are intentionally C++:** the library is C, but `tests/*.cpp` compile
 against GoogleTest (wired per-module in `tests/meson.build`/`tests/<module>/meson.build`,

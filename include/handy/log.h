@@ -55,8 +55,8 @@
 #ifndef HANDY_LOG_H
 #define HANDY_LOG_H
 
-#include "common.h"
-#include "colors.h"
+#include "internal/common.h"
+#include "internal/colors.h"
 
 #include <stdbool.h>
 #include <stdio.h>
