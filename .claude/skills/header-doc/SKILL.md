@@ -49,20 +49,13 @@ Plain-text (non-Doxygen) top-of-file doc comment for `handy` headers, per `inclu
  */
 ```
 
-Include guard follows immediately, no blank line skipped (see log.h). At EOF
-after `#endif`, repeat a license-only block:
-
-```c
-/**
- * SPDX-License-Identifier: <project license>
- * SPDX-FileCopyrightText: <year> <author name> <author email>
- */
-```
+Include guard follows immediately, no blank line skipped (see log.h). Nothing
+is repeated at EOF after `#endif` - the top-of-file comment is the only copy.
 
 ## Minimal variant
 
 No usage/config to show (`internal/colors.h`, `internal/common.h`) → only
-this at the top, no trailing duplicate:
+this at the top:
 
 ```c
 /**

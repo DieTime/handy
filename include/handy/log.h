@@ -167,7 +167,3 @@
 #endif
 
 #endif /* HANDY_LOG_H */
-/**
- * SPDX-License-Identifier: ISC
- * SPDX-FileCopyrightText: 2026 Denis Glazkov <glazzk.off@mail.ru>
- */
