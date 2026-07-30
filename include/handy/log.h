@@ -45,10 +45,10 @@
  *       ENABLED   - acquire a lock around every log call.
  *       DISABLED* - no locking.
  *
- *    #define HANDY_PREFIX=... - whether public macros are also exposed without the `handy_` prefix.
+ *    #define HANDY_LOG_PREFIX=... - whether public macros are also exposed without the `handy_log_` prefix.
  *
- *       KEEP* - keep the `handy_` prefix only.
- *       STRIP - also expose macros under their short names.
+ *       KEEP* - keep the `handy_log_` prefix only.
+ *       STRIP - also expose macros under their short `log_` names.
  *
  */
 
@@ -159,7 +159,16 @@
     fmt, ##__VA_ARGS__                                                                             \
 )
 
-#if HANDY_PREFIX_VALUE == HANDY_PREFIX_STRIP
+#ifndef HANDY_LOG_PREFIX
+#define HANDY_LOG_PREFIX KEEP
+#endif
+
+#define HANDY_LOG_PREFIX_KEEP  0
+#define HANDY_LOG_PREFIX_STRIP 1
+
+#define HANDY_LOG_PREFIX_VALUE HANDY_CONCAT(HANDY_LOG_PREFIX_, HANDY_LOG_PREFIX)
+
+#if HANDY_LOG_PREFIX_VALUE == HANDY_LOG_PREFIX_STRIP
     #define log_d handy_log_d
     #define log_i handy_log_i
     #define log_w handy_log_w

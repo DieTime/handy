@@ -36,9 +36,9 @@ before including the header (`#ifndef` supplies a default). `HANDY_CONCAT(a, b)`
 internal define: `HANDY_<MODULE>_<OPTION> <WORD>` → `HANDY_<MODULE>_<OPTION>_VALUE
 == HANDY_<MODULE>_<OPTION>_<WORD>`.
 
-**`HANDY_PREFIX` (`internal/common.h`):** library-wide switch. `KEEP` (default) keeps
-public macros under `handy_`; `STRIP` also exposes a short alias for each.
-Every module's public macros must respect it.
+**`HANDY_<MODULE>_PREFIX`:** per-module switch. `KEEP` (default) keeps public
+macros under `handy_<module>_`; `STRIP` also exposes short aliases (e.g.
+`log_d` for `handy_log_d`). Defined in each module header, not in `internal/`.
 
 **`include/handy/internal/`:** shared support headers used by multiple
 modules but not meant to be included directly by consumers (`common.h`,
@@ -60,6 +60,10 @@ test file defines its own `main()`.
   must build against GNU.
 - Boolean config macros: `ENABLED`/`DISABLED` values with a verb/gerund option
   name. Multi-value "mode" options: noun-phrase name with mode words as values.
+
+**`examples/`** are the canonical usage demonstration of the public API. When
+any public config macro is added, renamed, or removed, update the matching
+example file alongside the header and tests.
 
 **Header doc comments:** every public header starts with a documentation
 comment. Use the `header-doc` skill to write/update these.

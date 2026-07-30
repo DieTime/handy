@@ -1,4 +1,4 @@
-#define HANDY_PREFIX STRIP
+#define HANDY_LOG_PREFIX STRIP
 #define HANDY_LOG_LEVEL DEBUG
 #define HANDY_LOG_STDIO STDERR
 #include <handy/log.h>

@@ -5,7 +5,7 @@
 #include "temp_file.hpp"
 
 #ifdef log_d
-#error "HANDY_PREFIX defaults to KEEP; log_d must not be defined without HANDY_PREFIX STRIP"
+#error "HANDY_LOG_PREFIX defaults to KEEP; log_d must not be defined without HANDY_LOG_PREFIX STRIP"
 #endif
 
 TEST(Log, DefaultsFilterAtInfoAndRouteToStderrWithoutStripping) {

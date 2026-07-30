@@ -2,7 +2,7 @@
 #define HANDY_LOG_LEVEL DEBUG
 #define HANDY_LOG_FLUSH ALL
 #define HANDY_LOG_THREAD_SAFETY DISABLED
-#define HANDY_PREFIX STRIP
+#define HANDY_LOG_PREFIX STRIP
 #include <handy/log.h>
 
 int main(void) {
