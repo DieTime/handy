@@ -12,11 +12,12 @@ them either.
 Build dir is always `.build`.
 
 ```sh
-meson setup .build                    # first-time configure (examples build by default, tests don't)
-meson setup .build -Dbuild_tests=true # also configure with tests enabled
-meson compile -C .build               # build
-meson test -C .build                  # run full test suite (only if configured with build_tests)
-meson test -C .build log_format       # run a single test by name
+meson setup .build                               # first-time configure (examples build by default, tests don't)
+meson setup .build -Dbuild_tests=true            # also configure with tests enabled
+meson setup --reconfigure .build -Dbuild_tests=true  # re-configure an existing build dir
+meson compile -C .build                          # build
+meson test -C .build                             # run full test suite (only if configured with build_tests)
+meson test -C .build log_format                  # run a single test by name
 ```
 
 Examples build by default (`build_examples`, default `true` - no extra
@@ -24,9 +25,12 @@ dependency beyond the C compiler consumers already need). Tests are opt-in
 (`build_tests`, default `false`) since they additionally require
 `gtest`/`gtest_main`. System-wide GoogleTest is preferred (e.g.
 `apt install libgtest-dev`); the `subprojects/gtest.wrap` file is a fallback
-that meson downloads and builds automatically when no system package is found. Test binaries
-are named `<module>_<case>`, matching the `.cpp` file. Example binaries build
-to `.build/examples/...`.
+that meson downloads and builds automatically when no system package is found. Only
+`subprojects/*.wrap` files are committed — extracted source directories and
+`packagecache/` are gitignored.
+
+Test binaries are named `<module>_<case>`, matching the `.cpp` file. Example
+binaries build to `.build/examples/...`.
 
 ## Architecture
 
@@ -64,6 +68,13 @@ test file defines its own `main()`.
 **`examples/`** are the canonical usage demonstration of the public API. When
 any public config macro is added, renamed, or removed, update the matching
 example file alongside the header and tests.
+
+**Adding a new module** — checklist of files to create/update:
+1. `include/handy/<name>.h` — the header itself.
+2. `examples/<name>.c` — demonstrates every public config macro.
+3. `tests/<name>/` — test directory with its own `meson.build` and `*.cpp` files.
+4. `tests/meson.build` — add `subdir('<name>')`.
+5. Root `meson.build` — nothing to change (tests subdir is already wired in).
 
 **Header doc comments:** every public header starts with a documentation
 comment. Use the `header-doc` skill to write/update these.
