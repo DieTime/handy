@@ -10,8 +10,8 @@
 class TempFile {
 public:
     TempFile() {
-        char tmpl[] = "/tmp/handy_log_test_XXXXXX";
-        int fd = mkstemp(tmpl);
+        std::string tmpl = HANDY_TEST_TMPDIR "/handy_log_test_XXXXXX";
+        int fd = mkstemp(tmpl.data());
         close(fd);
         path_ = tmpl;
     }

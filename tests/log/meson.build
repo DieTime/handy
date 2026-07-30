@@ -13,9 +13,11 @@ tests = [
   'colored_output',
 ]
 
+args = ['-DHANDY_TEST_TMPDIR="' + meson.current_build_dir() + '"']
+
 foreach name : tests
     test(
         f'log_@name@',
-        executable(f'log_@name@', f'@name@.cpp', dependencies: [handy_dep, gtest_main_dep])
+        executable(f'log_@name@', f'@name@.cpp', dependencies: [handy_dep, gtest_main_dep], cpp_args: args)
     )
 endforeach
