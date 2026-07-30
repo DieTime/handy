@@ -22,9 +22,9 @@ meson test -C .build log_format       # run a single test by name
 Examples build by default (`build_examples`, default `true` - no extra
 dependency beyond the C compiler consumers already need). Tests are opt-in
 (`build_tests`, default `false`) since they additionally require
-`gtest`/`gtest_main` to be found on the system via pkg-config - there's no
-bundled/wrap fallback, so configuring with `build_tests=true` fails hard if
-GoogleTest isn't installed (e.g. `apt install libgtest-dev`). Test binaries
+`gtest`/`gtest_main`. System-wide GoogleTest is preferred (e.g.
+`apt install libgtest-dev`); the `subprojects/gtest.wrap` file is a fallback
+that meson downloads and builds automatically when no system package is found. Test binaries
 are named `<module>_<case>`, matching the `.cpp` file. Example binaries build
 to `.build/examples/...`.
 
