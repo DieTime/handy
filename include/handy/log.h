@@ -102,6 +102,15 @@
 
 #define HANDY_LOG_THREAD_SAFETY_VALUE HANDY_CONCAT(HANDY_LOG_THREAD_SAFETY_, HANDY_LOG_THREAD_SAFETY)
 
+#ifndef HANDY_LOG_PREFIX
+#define HANDY_LOG_PREFIX KEEP
+#endif
+
+#define HANDY_LOG_PREFIX_KEEP  0
+#define HANDY_LOG_PREFIX_STRIP 1
+
+#define HANDY_LOG_PREFIX_VALUE HANDY_CONCAT(HANDY_LOG_PREFIX_, HANDY_LOG_PREFIX)
+
 #define HANDY_LOG_IMPL(level, tag, color_of_tag, color_of_text, perform_flush, fmt, ...) do {      \
     if (HANDY_LOG_LEVEL_VALUE <= (level)) {                                                        \
         bool enable_colors = isatty(fileno(HANDY_LOG_STDIO_VALUE));                                \
@@ -158,15 +167,6 @@
     HANDY_LOG_FLUSH_VALUE == HANDY_LOG_FLUSH_ERRORS,                                               \
     fmt, ##__VA_ARGS__                                                                             \
 )
-
-#ifndef HANDY_LOG_PREFIX
-#define HANDY_LOG_PREFIX KEEP
-#endif
-
-#define HANDY_LOG_PREFIX_KEEP  0
-#define HANDY_LOG_PREFIX_STRIP 1
-
-#define HANDY_LOG_PREFIX_VALUE HANDY_CONCAT(HANDY_LOG_PREFIX_, HANDY_LOG_PREFIX)
 
 #if HANDY_LOG_PREFIX_VALUE == HANDY_LOG_PREFIX_STRIP
     #define log_d handy_log_d
