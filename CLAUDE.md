@@ -40,6 +40,15 @@ before including the header (`#ifndef` supplies a default). `HANDY_CONCAT(a, b)`
 internal define: `HANDY_<MODULE>_<OPTION> <WORD>` → `HANDY_<MODULE>_<OPTION>_VALUE
 == HANDY_<MODULE>_<OPTION>_<WORD>`.
 
+**Config option placement:** the `#ifndef`/default/`_VALUE` block for every
+public option must live together near the top of the file, grouped with the
+other options and in the same order as the doc comment - a reader shouldn't
+have to scroll past implementation to see what's configurable. If a piece of
+an option's behavior can only be defined later (e.g. `PREFIX`'s aliasing must
+follow the macros it aliases), split it: keep the option's definition/`_VALUE`
+macros in the top config block, and leave only the unavoidable later part
+where it's needed.
+
 **`HANDY_<MODULE>_PREFIX`:** per-module switch. `KEEP` (default) keeps public
 macros under `handy_<module>_`; `STRIP` also exposes short aliases (e.g.
 `log_d` for `handy_log_d`). Defined in each module header, not in `internal/`.
