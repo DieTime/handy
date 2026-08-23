@@ -24,12 +24,11 @@ Plain-text (non-Doxygen) top-of-file doc comment for `handy` headers, per `inclu
  *
  * Description:
  *
- *    <2-4 line prose paragraph. What the header provides, its key behaviors,
- *    and anything the reader must know before using it (e.g. "no .c file
- *    needed"). Wrapped, indented 3 spaces after the `* `. If the header has
- *    more than one distinct non-obvious behavior/constraint, split into
- *    several short single-topic paragraphs instead of one dense paragraph -
- *    see "Structuring a longer Description" below.>
+ *    <one short paragraph, 2-4 sentences. What the header provides and the
+ *    one or two behaviors a reader most needs before using it (e.g. "no .c
+ *    file needed"). Wrapped, indented 3 spaces after the `* `. See "Keeping
+ *    Description short" below - this is not the place for an exhaustive
+ *    explanation.>
  *
  * Usage:
  *
@@ -68,26 +67,23 @@ this at the top:
  */
 ```
 
-## Structuring a longer Description
+## Keeping Description short
 
-Default to one 2-4 line paragraph (see log.h). Reach for more structure only
-when the header genuinely has multiple distinct things a reader must know -
-e.g. more than one non-obvious behavior, or more than one way to use the
-API with a real tradeoff between them. When that happens:
+Always one short paragraph, 2-4 sentences (see log.h and optional.h) - not
+an essay explaining everything about the header. State only what it is and
+the one or two behaviors a reader most needs before writing code against
+it; leave the rest to be picked up from Usage's examples and the code's own
+naming.
 
-- Split by topic, one short paragraph each (blank `*` line between), not one
-  paragraph that runs every behavior/caveat together.
-- Each paragraph should be independently scannable - a reader skimming just
-  that paragraph gets one complete idea, not a fragment of a longer one.
-- A short indented sub-list (3 extra spaces) is fine for enumerating a
-  handful of alternatives with a real tradeoff (e.g. two ways to construct a
-  value) - keep each item to 2-3 lines.
-- Still technically succinct: cut restating the obvious (identifier names,
-  what a line of code already shows) and any wording that doesn't change
-  what the reader does differently.
-- See `include/handy/optional.h`'s Description for a worked multi-paragraph
-  example (what it is / the unsafe-field-and-abort mechanic / two
-  construction styles as a sub-list / the double-evaluation caveat).
+- One paragraph, no sub-lists, no multi-paragraph breakdown by topic - if a
+  header seems to need that much structure to explain itself, that's a sign
+  to cut content, not to add more sections.
+- Cut restating the obvious (identifier names, what a line of code already
+  shows) and any wording that doesn't change what the reader does
+  differently.
+- A genuinely non-obvious constraint (e.g. "evaluates its argument twice")
+  is worth one short clause tacked onto an existing sentence, not its own
+  paragraph.
 
 ## Keeping Usage succinct
 
@@ -98,11 +94,10 @@ output) belongs in `examples/<module>.c` per CLAUDE.md, not the doc
 comment - don't duplicate it here.
 
 - Group related calls with a blank `*` line between clusters (e.g. the two
-  constructors, then the accessor calls), not one unbroken block - mirrors
-  how a longer Description splits by topic.
-- Trailing comments: one space before `//`, short and plain. Don't pad
-  whitespace to align a comment column unless several similar lines are
-  genuinely grouped together - a one-off comment doesn't need alignment.
+  constructors, then the accessor calls), not one unbroken block.
+- No trailing `//` comments on Usage lines - identifier names plus the
+  Description already carry the meaning; a comment restating "aborts if
+  none" or "no type name needed" next to a self-explanatory call is noise.
 - Multi-line constructs shown inline (a struct definition, a function body)
   use normal C formatting - opening brace ends the line, body indented,
   closing brace alone - never condensed onto one line, matching the rest of
@@ -133,8 +128,8 @@ comment - don't duplicate it here.
 
 ## Worked example
 
-`include/handy/log.h` lines 1-53 (full, single-paragraph Description);
-`include/handy/optional.h` lines 1-63 (full, multi-paragraph Description and
-grouped Usage - see "Structuring a longer Description" and "Keeping Usage
-succinct" above); `include/handy/internal/colors.h` /
-`include/handy/internal/common.h` lines 1-4 (minimal).
+`include/handy/log.h` lines 1-53 and `include/handy/optional.h` lines 1-45
+(full, both single-paragraph Description, optional.h's Usage also showing
+the grouped-clusters style - see "Keeping Usage succinct" above);
+`include/handy/internal/colors.h` / `include/handy/internal/common.h`
+lines 1-4 (minimal).

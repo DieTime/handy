@@ -103,17 +103,17 @@ example file alongside the header and tests.
 
 **Header doc comments:** every public header starts with a documentation
 comment. Use the `header-doc` skill to write/update these. The Description
-section must stay technically succinct and structured for human
-readability - short, single-topic paragraphs (or a short sub-list for a
-handful of alternatives), not one dense paragraph carrying every behavior
-and caveat at once. The Usage section is a quick-glance cheat sheet, not a
+section is always one short paragraph, 2-4 sentences (see `log.h`) - what
+the header is and the one or two behaviors a reader most needs, never a
+multi-paragraph essay covering every behavior and caveat; leave the rest to
+Usage's examples and the code's own naming. The Usage section is a
+quick-glance cheat sheet, not a
 worked example - one call per public macro, grouped with blank lines by
 related cluster (e.g. the two constructors, then the accessors), no helper
 functions or printed output (that belongs in `examples/<module>.c`); any
 inline struct/function bodies use normal multi-line C formatting, never
-condensed onto one line; trailing comments get one space before `//`, no
-padding to align a column unless several similar lines are genuinely
-grouped.
+condensed onto one line; no trailing `//` comments on Usage lines -
+identifier names plus the Description already carry the meaning.
 
 **No auto-formatters:** no clang-format or similar tool is used in this
 project. Formatting is by hand, per the author's own sense of what looks
