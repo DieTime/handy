@@ -60,11 +60,23 @@ modules but not meant to be included directly by consumers (`common.h`,
 
 **Tests are intentionally C++:** the library is C, but `tests/*.cpp` compile
 against GoogleTest (wired per-module in `tests/meson.build`/`tests/<module>/meson.build`,
-gated behind the `build_tests` option in the root `meson.build`). Each file
-`#define`s its own config then includes the header fresh - one binary per
-config/behavior combo, since `HANDY_*` macros resolve once per translation
-unit and can't vary within one. Each binary links `gtest_main` directly, so no
-test file defines its own `main()`.
+gated behind the `build_tests` option in the root `meson.build`). Each binary
+links `gtest_main` directly, so no test file defines its own `main()`.
+
+**One file per translation unit that actually needs one - not one per
+behavior:** split into a separate `.cpp` only when a test needs its own
+`#define HANDY_<MODULE>_<OPTION>` before including the header (those macros
+resolve once per translation unit and can't vary within one - e.g. a
+`STRIP`-prefix test needs its own file; a plain behavior check under
+defaults doesn't), or when the test needs an incompatible harness/technique
+(e.g. `tests/log/colored_output.cpp`'s PTY capture via `forkpty()` can't
+share a file with `stdio_target.cpp`'s plain `freopen()` redirection, even
+though both use the same config). Tests that share both config and
+technique - which is most of them - belong together as multiple `TEST()`
+cases in one file (e.g. `defaults.cpp`), not split out one-per-behavior.
+Splitting a test into its own file when neither its config nor its
+technique requires it is unnecessary ceremony - don't do it just because
+the behavior has a name.
 
 **Design principles for any new module/logic:**
 - Simple, readable code over faster-but-more-complex.
@@ -73,6 +85,10 @@ test file defines its own `main()`.
   must build against GNU.
 - Boolean config macros: `ENABLED`/`DISABLED` values with a verb/gerund option
   name. Multi-value "mode" options: noun-phrase name with mode words as values.
+- Types (typedefs, struct tags meant to be used as a type) are named C-style:
+  `snake_case` with a `_t` suffix on typedef'd names (e.g. `opt_int_t`). Plain
+  struct tags not typedef'd stay `snake_case` without `_t` (e.g. `struct
+  config`). Applies in test/example code too, not just headers.
 
 **`examples/`** are the canonical usage demonstration of the public API. When
 any public config macro is added, renamed, or removed, update the matching
@@ -86,7 +102,18 @@ example file alongside the header and tests.
 5. Root `meson.build` — nothing to change (tests subdir is already wired in).
 
 **Header doc comments:** every public header starts with a documentation
-comment. Use the `header-doc` skill to write/update these.
+comment. Use the `header-doc` skill to write/update these. The Description
+section must stay technically succinct and structured for human
+readability - short, single-topic paragraphs (or a short sub-list for a
+handful of alternatives), not one dense paragraph carrying every behavior
+and caveat at once. The Usage section is a quick-glance cheat sheet, not a
+worked example - one call per public macro, grouped with blank lines by
+related cluster (e.g. the two constructors, then the accessors), no helper
+functions or printed output (that belongs in `examples/<module>.c`); any
+inline struct/function bodies use normal multi-line C formatting, never
+condensed onto one line; trailing comments get one space before `//`, no
+padding to align a column unless several similar lines are genuinely
+grouped.
 
 **No auto-formatters:** no clang-format or similar tool is used in this
 project. Formatting is by hand, per the author's own sense of what looks
