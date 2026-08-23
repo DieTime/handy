@@ -1,6 +1,6 @@
 cc = meson.get_compiler('c')
 
-deps = [ handy_dep ]
+deps = [handy_dep]
 args = cc.get_supported_arguments('-fanalyzer')
 
 examples = [
